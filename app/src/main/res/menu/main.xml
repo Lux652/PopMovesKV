@@ -4,7 +4,7 @@
 
 <item
     android:id="@+id/btnShare"
-    android:title="Share"
+    android:title="@string/icon_share"
     android:icon="@drawable/share"
     app:showAsAction="ifRoom"
     app:iconTint="@android:color/white"

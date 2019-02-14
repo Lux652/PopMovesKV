@@ -2,23 +2,18 @@ package com.example.lux.popmovieskv.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.lux.popmovieskv.R;
 import com.example.lux.popmovieskv.listeners.OnFavClick;
-import com.example.lux.popmovieskv.listeners.OnMoviesClick;
 import com.example.lux.popmovieskv.models.FavMovie;
-import com.example.lux.popmovieskv.models.Movie;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class FavMoviesAdapter extends RecyclerView.Adapter<FavMoviesAdapter.FavViewHolder> {
@@ -78,17 +73,14 @@ public class FavMoviesAdapter extends RecyclerView.Adapter<FavMoviesAdapter.FavV
                 }
             });
 
-
-
         }
 
         public void bind(FavMovie favMovie){
             this.favMovie = favMovie;
             title.setText(favMovie.getTitle());
-
             rating.setText(String.valueOf(favMovie.getUserRating()));
             releaseDate.setText(favMovie.getReleaseDate());
-            genre.setText("Genre");
+            genre.setText(R.string.genre);
             Glide.with(itemView)
                     .load(IMAGE_URL + favMovie.getPosterPath())
                     .apply(RequestOptions.placeholderOf(R.drawable.placeholder))

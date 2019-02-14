@@ -14,7 +14,6 @@ import com.example.lux.popmovieskv.R;
 import com.example.lux.popmovieskv.listeners.OnMoviesClick;
 import com.example.lux.popmovieskv.models.Movie;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewHolder> {
@@ -37,7 +36,6 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
 
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder viewHolder, int position) {
-
         viewHolder.bind(movies.get(position));
     }
 
@@ -54,7 +52,6 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
         TextView genre;
         Movie movie;
 
-
         public MovieViewHolder(View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.item_movie_title);
@@ -62,7 +59,6 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
             releaseDate = itemView.findViewById(R.id.item_movie_release_date);
             poster = itemView.findViewById(R.id.item_movie_poster);
             genre = itemView.findViewById(R.id.item_movie_genre);
-
             itemView.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v){
@@ -77,7 +73,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
             releaseDate.setText(movie.getReleaseDate());
             title.setText(movie.getTitle());
             rating.setText(movie.getVoteAverage());
-            genre.setText("Genre");
+            genre.setText(R.string.genre);
             Glide.with(itemView)
                     .load(IMAGE_URL + movie.getPosterPath())
                     .apply(RequestOptions.placeholderOf(R.drawable.placeholder))

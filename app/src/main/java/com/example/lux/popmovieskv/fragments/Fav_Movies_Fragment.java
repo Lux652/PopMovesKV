@@ -9,33 +9,23 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.lux.popmovieskv.R;
 import com.example.lux.popmovieskv.activities.MovieDetail;
 import com.example.lux.popmovieskv.adapters.FavMoviesAdapter;
-import com.example.lux.popmovieskv.adapters.MoviesAdapter;
 import com.example.lux.popmovieskv.database.DatabaseClient;
 import com.example.lux.popmovieskv.listeners.OnFavClick;
-import com.example.lux.popmovieskv.listeners.OnMoviesClick;
-import com.example.lux.popmovieskv.models.FavMovie;
-import com.example.lux.popmovieskv.models.Movie;
-import com.example.lux.popmovieskv.models.MoviesResponse;
-import com.example.lux.popmovieskv.network.RetrofitManager;
 
-import java.util.ArrayList;
+import com.example.lux.popmovieskv.models.FavMovie;
+
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static com.example.lux.popmovieskv.activities.MovieDetail.CHECK;
-import static com.example.lux.popmovieskv.activities.MovieDetail.FAV_MOVIE_ID;
+import static com.example.lux.popmovieskv.activities.MovieDetail.MOVIE_ID;
 
 public class Fav_Movies_Fragment extends Fragment  {
 
@@ -68,7 +58,7 @@ public class Fav_Movies_Fragment extends Fragment  {
         moviesRecyclerView = view.findViewById(R.id.movies_list);
         moviesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         moviesRecyclerView.setAdapter(favMoviesAdapter);
-        getActivity().setTitle("Favoriti");
+        getActivity().setTitle(getString(R.string.favorite_movies));
         return view;
     }
 
@@ -102,7 +92,7 @@ public class Fav_Movies_Fragment extends Fragment  {
         public void OnClick(FavMovie favMovie) {
             Intent intent = new Intent(getActivity(), MovieDetail.class );
             intent.putExtra(CHECK,false);
-            intent.putExtra(FAV_MOVIE_ID, favMovie.getId());
+            intent.putExtra(MOVIE_ID, favMovie.getId());
             startActivity(intent);
         }
     };

@@ -29,7 +29,6 @@
             android:layout_marginEnd="6dp"
             android:layout_marginStart="6dp"
             android:layout_marginTop="6dp"
-            android:text="2019"
             app:layout_constraintEnd_toStartOf="@+id/item_movie_rating"
             app:layout_constraintStart_toEndOf="@+id/item_movie_poster"
             app:layout_constraintTop_toTopOf="parent" />
@@ -41,7 +40,6 @@
             android:layout_marginEnd="6dp"
             android:layout_marginStart="6dp"
             android:layout_marginTop="6dp"
-            android:text="Title"
             android:textSize="26sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/item_movie_poster"
@@ -54,7 +52,6 @@
             android:layout_marginEnd="6dp"
             android:layout_marginStart="6dp"
             android:layout_marginTop="6dp"
-            android:text="Genre"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/item_movie_poster"
             app:layout_constraintTop_toBottomOf="@+id/item_movie_title" />
@@ -65,9 +62,19 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="6dp"
             android:layout_marginTop="6dp"
-            android:text="7.7"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/item_rating_10"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/item_rating_10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="6dp"
+            android:layout_marginTop="6dp"
+            app:layout_constraintLeft_toRightOf="@id/item_movie_rating"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/rating_10"/>
     </android.support.constraint.ConstraintLayout>
 
 </android.support.v7.widget.CardView>

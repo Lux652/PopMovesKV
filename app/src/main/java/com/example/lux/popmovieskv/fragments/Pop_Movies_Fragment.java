@@ -1,8 +1,6 @@
 package com.example.lux.popmovieskv.fragments;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,15 +18,14 @@ import com.example.lux.popmovieskv.models.Movie;
 import com.example.lux.popmovieskv.models.MoviesResponse;
 import com.example.lux.popmovieskv.network.RetrofitManager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.example.lux.popmovieskv.activities.MovieDetail.API_MOVIE_ID;
 import static com.example.lux.popmovieskv.activities.MovieDetail.CHECK;
+import static com.example.lux.popmovieskv.activities.MovieDetail.MOVIE_ID;
 
 public class Pop_Movies_Fragment extends Fragment implements Callback<MoviesResponse> {
 
@@ -61,7 +58,7 @@ public class Pop_Movies_Fragment extends Fragment implements Callback<MoviesResp
         View view = inflater.inflate(R.layout.fragment_pop__movies_,container,false);
         moviesRecyclerView = view.findViewById(R.id.movies_list);
         moviesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        getActivity().setTitle("Trenutno u kinima");
+        getActivity().setTitle(getString(R.string.now_playing_movies));
         return view;
     }
 
@@ -72,13 +69,13 @@ public class Pop_Movies_Fragment extends Fragment implements Callback<MoviesResp
             initializeRecyclerView(moviesResponse.getResults());
         }
         else{
-            Toast.makeText(getActivity(), "Nema internetske veze", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.connection_error), Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
     public void onFailure(Call<MoviesResponse> call, Throwable t) {
-        Toast.makeText(getActivity(), "Nema internetske veze", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), getString(R.string.connection_error), Toast.LENGTH_SHORT).show();
 
     }
 
@@ -92,7 +89,7 @@ public class Pop_Movies_Fragment extends Fragment implements Callback<MoviesResp
         public void onClick(Movie movie) {
             Intent intent = new Intent(getActivity(), MovieDetail.class );
             intent.putExtra(CHECK,true);
-            intent.putExtra(API_MOVIE_ID, movie.getId());
+            intent.putExtra(MOVIE_ID, movie.getId());
             startActivity(intent);
         }
     };

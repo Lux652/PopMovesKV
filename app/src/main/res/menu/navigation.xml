@@ -3,14 +3,14 @@
     <item
         android:id="@+id/navPopular"
         android:icon="@drawable/movie"
-        android:title="Movies">
+        android:title="@string/icon_movies">
 
     </item>
 
     <item
         android:id="@+id/navFavorites"
         android:icon="@drawable/star"
-        android:title="Favorites">
+        android:title="@string/icon_fav">
 
     </item>
 
