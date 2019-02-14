@@ -8,6 +8,7 @@
     <string name="dialog_ok">Save</string>
     <string name="dialog_cancel">Cancel</string>
     <string name="dialog_warning">Your rating needs to be between 0 and 10!</string>
+    <string name="dialog_warning2">Your need to rate the movie!</string>
 
     <string name="icon_movies">Movies</string>
     <string name="icon_fav">Favorites</string>

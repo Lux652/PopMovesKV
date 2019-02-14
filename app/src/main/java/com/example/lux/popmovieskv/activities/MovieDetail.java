@@ -139,15 +139,28 @@ public class MovieDetail extends AppCompatActivity implements Callback<Movie> {
                 alert.setView(input);
                 alert.setPositiveButton(getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
+
                         userRatingString = input.getText().toString();
-                        userRatingValue=Float.parseFloat(userRatingString);
-                        if(userRatingValue<=10 && userRatingValue>=0){
-                            saveMovie(movie);
-                            Toast.makeText(MovieDetail.this, movie.getTitle() + getString(R.string.msg_add), Toast.LENGTH_SHORT).show();
+
+                        if(!userRatingString.isEmpty()){
+                            userRatingValue=Float.parseFloat(userRatingString);
+
+                            if(userRatingValue<=10 && userRatingValue>=0){
+                                saveMovie(movie);
+                                Toast.makeText(MovieDetail.this, movie.getTitle() + getString(R.string.msg_add), Toast.LENGTH_SHORT).show();
+
+                            }
+                            else{
+                                Toast.makeText(MovieDetail.this, getString(R.string.dialog_warning), Toast.LENGTH_SHORT).show();
+                            }
                         }
+
                         else{
-                            Toast.makeText(MovieDetail.this, getString(R.string.dialog_warning), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MovieDetail.this, getString(R.string.dialog_warning2), Toast.LENGTH_SHORT).show();
                         }
+
+
+
                     }
                 });
                 alert.setNegativeButton(getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
