@@ -64,8 +64,6 @@ public class MovieDetail extends AppCompatActivity implements Callback<Movie> {
         toolbar = getSupportActionBar();
 
 
-
-
         if(getIntent().getBooleanExtra(CHECK,true)){
             movieId = getIntent().getIntExtra(MOVIE_ID,movieId);
             Call<Movie>movieDetails = RetrofitManager.getInstance().service().getMovieDetails(movieId,API_KEY);
@@ -108,8 +106,6 @@ public class MovieDetail extends AppCompatActivity implements Callback<Movie> {
         return super.onOptionsItemSelected(item);
     }
 
-
-
     @Override
     public void onResponse(Call<Movie> call, Response<Movie> response) {
        final Movie movie = response.body();
@@ -148,7 +144,6 @@ public class MovieDetail extends AppCompatActivity implements Callback<Movie> {
                             if(userRatingValue<=10 && userRatingValue>=0){
                                 saveMovie(movie);
                                 Toast.makeText(MovieDetail.this, movie.getTitle() + getString(R.string.msg_add), Toast.LENGTH_SHORT).show();
-
                             }
                             else{
                                 Toast.makeText(MovieDetail.this, getString(R.string.dialog_warning), Toast.LENGTH_SHORT).show();
@@ -158,9 +153,6 @@ public class MovieDetail extends AppCompatActivity implements Callback<Movie> {
                         else{
                             Toast.makeText(MovieDetail.this, getString(R.string.dialog_warning2), Toast.LENGTH_SHORT).show();
                         }
-
-
-
                     }
                 });
                 alert.setNegativeButton(getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
@@ -175,9 +167,7 @@ public class MovieDetail extends AppCompatActivity implements Callback<Movie> {
         else{
             Toast.makeText(this, getString(R.string.error), Toast.LENGTH_SHORT).show();
         }
-
     }
-
 
 
     @Override
