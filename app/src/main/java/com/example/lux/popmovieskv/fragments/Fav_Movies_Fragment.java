@@ -62,6 +62,12 @@ public class Fav_Movies_Fragment extends Fragment  {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getFavMovies();
+    }
+
 
     private void getFavMovies(){
         class GetFavMovies extends AsyncTask<Void, Void, List<FavMovie>>{

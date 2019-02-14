@@ -241,8 +241,6 @@ public class MovieDetail extends AppCompatActivity implements Callback<Movie> {
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
                 finish();
-                startActivity(new Intent(MovieDetail.this,MainActivity.class));
-
             }
         }
         DM dm = new DM();
