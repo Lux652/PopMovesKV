@@ -85,6 +85,7 @@ public class FavMoviesAdapter extends RecyclerView.Adapter<FavMoviesAdapter.FavV
         public void bind(FavMovie favMovie){
             this.favMovie = favMovie;
             title.setText(favMovie.getTitle());
+
             rating.setText(String.valueOf(favMovie.getUserRating()));
             releaseDate.setText(favMovie.getReleaseDate());
             genre.setText("Genre");
@@ -96,6 +97,7 @@ public class FavMoviesAdapter extends RecyclerView.Adapter<FavMoviesAdapter.FavV
         }
 
     }
+
 
 
 }

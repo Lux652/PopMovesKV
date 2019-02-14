@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -69,7 +70,6 @@ public class Fav_Movies_Fragment extends Fragment  {
         moviesRecyclerView.setAdapter(favMoviesAdapter);
         getActivity().setTitle("Favoriti");
         return view;
-
     }
 
 
@@ -102,11 +102,14 @@ public class Fav_Movies_Fragment extends Fragment  {
         public void OnClick(FavMovie favMovie) {
             Intent intent = new Intent(getActivity(), MovieDetail.class );
             intent.putExtra(CHECK,false);
-
             intent.putExtra(FAV_MOVIE_ID, favMovie.getId());
-            Log.d("ID OVOG JE", "GROB " + favMovie.getId());
             startActivity(intent);
-
         }
     };
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
 }

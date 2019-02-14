@@ -5,15 +5,24 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.ShareCompat;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ShareActionProvider;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +31,8 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.lux.popmovieskv.R;
 import com.example.lux.popmovieskv.database.DatabaseClient;
 import com.example.lux.popmovieskv.database.FavMovieDao;
+import com.example.lux.popmovieskv.fragments.Fav_Movies_Fragment;
+import com.example.lux.popmovieskv.fragments.Pop_Movies_Fragment;
 import com.example.lux.popmovieskv.models.FavMovie;
 import com.example.lux.popmovieskv.models.Movie;
 import com.example.lux.popmovieskv.network.RetrofitManager;
@@ -31,6 +42,8 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static android.content.Intent.EXTRA_TEXT;
 
 public class MovieDetail extends AppCompatActivity implements Callback<Movie> {
 
@@ -51,6 +64,7 @@ public class MovieDetail extends AppCompatActivity implements Callback<Movie> {
     private FloatingActionButton fab;
     Float value;
     String sir;
+    ActionBar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +77,9 @@ public class MovieDetail extends AppCompatActivity implements Callback<Movie> {
         moviePoster = findViewById(R.id.iv_poster);
         movieBackdrop = findViewById(R.id.iv_backdrop);
         fab = findViewById(R.id.fab);
+        toolbar = getSupportActionBar();
+
+
 
 
         if(getIntent().getBooleanExtra(CHECK,true)){
@@ -77,7 +94,6 @@ public class MovieDetail extends AppCompatActivity implements Callback<Movie> {
             final FavMovie favMovie = new FavMovie();
             fab.setImageResource(R.drawable.ic_action_favorite);
             getMovieByID(favMovieId);
-
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -86,6 +102,25 @@ public class MovieDetail extends AppCompatActivity implements Callback<Movie> {
                 }
             });
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main,menu);
+        return super.onCreateOptionsMenu(menu);
+
+    }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        switch(itemId){
+            case R.id.btnShare:
+                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                String shareBody = "Body";
+                sharingIntent.putExtra(EXTRA_TEXT,shareBody);
+                startActivity(Intent.createChooser(sharingIntent,"Share with:"));
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 
@@ -106,6 +141,8 @@ public class MovieDetail extends AppCompatActivity implements Callback<Movie> {
                     .load(IMAGE_BASE_URL + movie.getPosterPath())
                     .apply(RequestOptions.placeholderOf(R.drawable.placeholder))
                     .into(moviePoster);
+            toolbar.setTitle(movie.getTitle());
+
 
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -143,6 +180,7 @@ public class MovieDetail extends AppCompatActivity implements Callback<Movie> {
         else{
             Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show();
         }
+
     }
 
 
@@ -205,6 +243,7 @@ public class MovieDetail extends AppCompatActivity implements Callback<Movie> {
                 .load(IMAGE_BASE_URL + favMovies.getPosterPath())
                 .apply(RequestOptions.placeholderOf(R.drawable.placeholder))
                 .into(moviePoster);
+        toolbar.setTitle(favMovies.getTitle());
         return favMovies;
     }
 
@@ -222,15 +261,14 @@ public class MovieDetail extends AppCompatActivity implements Callback<Movie> {
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
                 finish();
+                Fragment fragment = new Fav_Movies_Fragment();
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.detach(fragment).attach(fragment).commit();
                 startActivity(new Intent(MovieDetail.this,MainActivity.class));
+
             }
         }
         DM dm = new DM();
         dm.execute();
     }
-
-    public void RatingDialog(){
-
-    }
-
 }
