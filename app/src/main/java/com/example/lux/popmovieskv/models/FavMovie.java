@@ -26,8 +26,8 @@ public class FavMovie implements Parcelable {
     @ColumnInfo(name = "release_date")
     public String releaseDate;
 
-    @ColumnInfo(name = "vote_average")
-    public String voteAverage;
+    @ColumnInfo(name = "user_rating")
+    public float userRating;
 
     public FavMovie(){}
 
@@ -38,7 +38,7 @@ public class FavMovie implements Parcelable {
         backdropPath = in.readString();
         overview = in.readString();
         releaseDate = in.readString();
-        voteAverage = in.readString();
+        userRating = in.readFloat();
 
     }
 
@@ -67,7 +67,7 @@ public class FavMovie implements Parcelable {
         parcel.writeString(backdropPath);
         parcel.writeString(overview);
         parcel.writeString(releaseDate);
-        parcel.writeString(voteAverage);
+        parcel.writeFloat(userRating);
 
     }
 
@@ -117,12 +117,12 @@ public class FavMovie implements Parcelable {
         this.releaseDate = releaseDate;
     }
 
-    public String getVoteAverage() {
-        return voteAverage;
+    public Float getUserRating() {
+        return userRating;
     }
 
-    public void setVoteAverage(String voteAverage) {
-        this.voteAverage = voteAverage;
+    public void setUserRating(Float userRating) {
+        this.userRating = userRating;
     }
 
 }

@@ -42,7 +42,6 @@ public class MovieDetail extends AppCompatActivity implements Callback<Movie> {
     private String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w500";
     private int movieId;
     private int favMovieId;
-
     private TextView movieTitle;
     private TextView movieDate;
     private TextView movieRating;
@@ -50,7 +49,8 @@ public class MovieDetail extends AppCompatActivity implements Callback<Movie> {
     private ImageView moviePoster;
     private ImageView movieBackdrop;
     private FloatingActionButton fab;
-    String value;
+    Float value;
+    String sir;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +83,6 @@ public class MovieDetail extends AppCompatActivity implements Callback<Movie> {
                 public void onClick(View v) {
                     favMovie.setId(favMovieId);
                     deleteMovie(favMovie);
-                    Toast.makeText(MovieDetail.this, favMovie.getTitle() + " is deleted succesfully", Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -103,29 +102,34 @@ public class MovieDetail extends AppCompatActivity implements Callback<Movie> {
                     .load(IMAGE_BASE_URL + movie.getBackdropPath())
                     .apply(RequestOptions.placeholderOf(R.color.colorPrimary))
                     .into(movieBackdrop);
+            Glide.with(MovieDetail.this)
+                    .load(IMAGE_BASE_URL + movie.getPosterPath())
+                    .apply(RequestOptions.placeholderOf(R.drawable.placeholder))
+                    .into(moviePoster);
 
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     AlertDialog.Builder alert = new AlertDialog.Builder(MovieDetail.this);
-
-                    alert.setTitle("Title");
-                    alert.setMessage("Message");
-
+                    alert.setTitle("Rate");
+                    alert.setMessage("Enter a rating between 0 and 10");
                     // Set an EditText view to get user input
                     final EditText input = new EditText(MovieDetail.this);
-                    input.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED);
+                   input.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
                     alert.setView(input);
-
                     alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
-                           
-                            value = input.getText().toString();
-
-                            saveMovie(movie);
+                            sir = input.getText().toString();
+                            value=Float.parseFloat(sir);
+                            if(value<=10 && value>=0){
+                                saveMovie(movie);
+                            }
+                            else{
+                                Toast.makeText(MovieDetail.this, "Rating needs to be between 0 and 10!", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     });
-
                     alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
                             // Canceled.
@@ -137,9 +141,8 @@ public class MovieDetail extends AppCompatActivity implements Callback<Movie> {
             });
         }
         else{
-            Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show();
         }
-
     }
 
 
@@ -152,7 +155,7 @@ public class MovieDetail extends AppCompatActivity implements Callback<Movie> {
     private void saveMovie(Movie movie){
         final String Title = movie.getTitle();
         final String Overview = movie.getOverview();
-        final String Rating = value;
+        final Float Rating = value;
         final String PosterPath = movie.getPosterPath();
         final String BackdropPath = movie.getBackdropPath();
 
@@ -163,13 +166,14 @@ public class MovieDetail extends AppCompatActivity implements Callback<Movie> {
                 FavMovie favMovie = new FavMovie();
                 favMovie.setTitle(Title);
                 favMovie.setOverview(Overview);
-                favMovie.setVoteAverage(Rating);
+                favMovie.setUserRating(Rating);
                 favMovie.setPosterPath(PosterPath);
                 favMovie.setBackdropPath(BackdropPath);
                 DatabaseClient.getInstance(getApplicationContext()).getMovieDatabase()
                         .favMovieDao()
                         .insertFavoriteMovie(favMovie);
                 return null;
+
             }
 
             @Override
@@ -180,6 +184,7 @@ public class MovieDetail extends AppCompatActivity implements Callback<Movie> {
         }
         SaveTask st = new SaveTask();
         st.execute();
+        Toast.makeText(MovieDetail.this, "bica " + Rating, Toast.LENGTH_SHORT).show();
     }
 
 
@@ -191,14 +196,16 @@ public class MovieDetail extends AppCompatActivity implements Callback<Movie> {
                 .loadMovieById(id);
         movieTitle.setText(favMovies.getTitle());
         movieOverview.setText(favMovies.getOverview());
-        movieRating.setText(favMovies.getVoteAverage());
+        movieRating.setText(String.valueOf(favMovies.getUserRating()));
         Glide.with(MovieDetail.this)
                 .load(IMAGE_BASE_URL + favMovies.getBackdropPath())
                 .apply(RequestOptions.placeholderOf(R.color.colorPrimary))
                 .into(movieBackdrop);
-
+        Glide.with(MovieDetail.this)
+                .load(IMAGE_BASE_URL + favMovies.getPosterPath())
+                .apply(RequestOptions.placeholderOf(R.drawable.placeholder))
+                .into(moviePoster);
         return favMovies;
-
     }
 
     private void deleteMovie(final FavMovie favMovie){
@@ -218,7 +225,6 @@ public class MovieDetail extends AppCompatActivity implements Callback<Movie> {
                 startActivity(new Intent(MovieDetail.this,MainActivity.class));
             }
         }
-
         DM dm = new DM();
         dm.execute();
     }

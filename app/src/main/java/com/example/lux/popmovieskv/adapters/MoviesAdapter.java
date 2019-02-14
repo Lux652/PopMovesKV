@@ -74,9 +74,9 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
 
         public void bind(Movie movie){
             this.movie = movie;
-            releaseDate.setText(movie.getReleaseDate().split("-")[0]);
+            releaseDate.setText(movie.getReleaseDate());
             title.setText(movie.getTitle());
-            rating.setText(String.valueOf(movie.getVoteAverage()));
+            rating.setText(movie.getVoteAverage());
             genre.setText("Genre");
             Glide.with(itemView)
                     .load(IMAGE_URL + movie.getPosterPath())
