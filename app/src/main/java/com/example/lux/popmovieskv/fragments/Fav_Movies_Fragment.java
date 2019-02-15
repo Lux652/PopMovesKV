@@ -57,7 +57,7 @@ public class Fav_Movies_Fragment extends Fragment  {
         View view = inflater.inflate(R.layout.fragment_fav__movies_,container,false);
         moviesRecyclerView = view.findViewById(R.id.movies_list);
         moviesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        moviesRecyclerView.setAdapter(favMoviesAdapter);
+        /*moviesRecyclerView.setAdapter(favMoviesAdapter);*/
         getActivity().setTitle(getString(R.string.favorite_movies));
         return view;
     }

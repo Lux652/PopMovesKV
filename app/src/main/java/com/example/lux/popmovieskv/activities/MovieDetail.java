@@ -179,6 +179,7 @@ public class MovieDetail extends AppCompatActivity implements Callback<Movie> {
         final String Title = movie.getTitle();
         final String Overview = movie.getOverview();
         final Float Rating = userRatingValue;
+        final String ReleaseDate = movie.getReleaseDate();
         final String PosterPath = movie.getPosterPath();
         final String BackdropPath = movie.getBackdropPath();
 
@@ -190,6 +191,7 @@ public class MovieDetail extends AppCompatActivity implements Callback<Movie> {
                 favMovie.setTitle(Title);
                 favMovie.setOverview(Overview);
                 favMovie.setUserRating(Rating);
+                favMovie.setReleaseDate(ReleaseDate);
                 favMovie.setPosterPath(PosterPath);
                 favMovie.setBackdropPath(BackdropPath);
                 DatabaseClient.getInstance(getApplicationContext()).getMovieDatabase()

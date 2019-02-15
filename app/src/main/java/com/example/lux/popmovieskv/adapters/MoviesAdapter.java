@@ -65,7 +65,6 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
                     mClick.onClick(movie);
                 }
             });
-
         }
 
         public void bind(Movie movie){

@@ -72,7 +72,6 @@ public class FavMoviesAdapter extends RecyclerView.Adapter<FavMoviesAdapter.FavV
                     favClick.OnClick(favMovie);
                 }
             });
-
         }
 
         public void bind(FavMovie favMovie){
@@ -85,11 +84,6 @@ public class FavMoviesAdapter extends RecyclerView.Adapter<FavMoviesAdapter.FavV
                     .load(IMAGE_URL + favMovie.getPosterPath())
                     .apply(RequestOptions.placeholderOf(R.drawable.placeholder))
                     .into(poster);
-
         }
-
     }
-
-
-
 }
